@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 //AsimTesting Branch
+//Merge Testing
 public class MainActivity extends AppCompatActivity {
 
     @Override
