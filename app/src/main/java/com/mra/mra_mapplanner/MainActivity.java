@@ -1,11 +1,15 @@
 package com.mra.mra_mapplanner;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -17,6 +21,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.g_map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -24,7 +32,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         //seattle coordinates
         LatLng seattle = new LatLng(47.6062095, -122.3320708);
+        mMap.setMinZoomPreference(15);
+        mMap.setMaxZoomPreference(20);
         mMap.addMarker(new MarkerOptions().position(seattle).title("Seattle"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(seattle));
+
+        CircleOptions circleOptions = new CircleOptions();
+        circleOptions.center(seattle);
+        circleOptions.radius(200);
+        circleOptions.fillColor(Color.BLUE);
+        mMap.addCircle(circleOptions);
     }
 }
