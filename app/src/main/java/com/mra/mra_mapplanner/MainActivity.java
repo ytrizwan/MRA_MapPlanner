@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         //seattle coordinates
         LatLng seattle = new LatLng(47.6062095, -122.3320708);
-        mMap.setMinZoomPreference(15);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+        mMap.setMinZoomPreference(12);
         mMap.setMaxZoomPreference(20);
         mMap.addMarker(new MarkerOptions().position(seattle).title("Seattle"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(seattle));
@@ -40,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(seattle);
         circleOptions.radius(200);
-        circleOptions.fillColor(Color.BLUE);
+        circleOptions.fillColor(Color.GREEN);
         mMap.addCircle(circleOptions);
+
+        
     }
 }
