@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //seattle coordinates
-        LatLng seattle = new LatLng(47.6062095, -122.3320708);
+        LatLng seattle = new LatLng(-37.705750,144.937150);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
         mMap.setMinZoomPreference(12);
