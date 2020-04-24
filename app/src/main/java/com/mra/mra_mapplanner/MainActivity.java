@@ -13,8 +13,6 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
@@ -32,33 +30,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.widget.Toast;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class MainActivity extends AppCompatActivity
         implements
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback{
-
-
-
 
     /**
      * Request code for location permission request.
@@ -88,8 +65,6 @@ public class MainActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
-
 //        //seattle coordinates
 //        LatLng seattle = new LatLng(-37.705750,144.937150);
 //        mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -110,17 +85,7 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
 
-
-        
     }
-
-
-
-
-
-
-
-
 
     /**
      * Enables the My Location layer if the fine location permission has been granted.
