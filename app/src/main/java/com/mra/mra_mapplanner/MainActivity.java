@@ -90,7 +90,9 @@ public class MainActivity extends AppCompatActivity
         enableMyLocation();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
+        
     }
 
 
@@ -105,12 +107,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.miCompose:
-                Toast.makeText(this, "MiCompose", Toast.LENGTH_SHORT).show();
+            case R.id.search:
+                Toast.makeText(this, "Searching", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.miProfile:
-                Toast.makeText(this, "MiProfile", Toast.LENGTH_SHORT).show();
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
