@@ -3,8 +3,11 @@ package com.mra.mra_mapplanner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,6 +21,11 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -30,9 +38,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -70,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         mMap = googleMap;
 
 //        //seattle coordinates
-//        LatLng seattle = new LatLng(-37.705750,144.937150);
+        LatLng seattle = new LatLng(-37.705750,144.937150);
 //        mMap.getUiSettings().setZoomControlsEnabled(true);
 //
 //        mMap.setMinZoomPreference(12);
@@ -89,10 +102,64 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.BLACK);
-        setSupportActionBar(toolbar);
-        
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        toolbar.setTitleTextColor(Color.BLACK);
+//        setSupportActionBar(toolbar);
+
+        Places.initialize(getApplicationContext(),"AIzaSyA_C4kYNk05hSUukykiHrWpV9rBiLPWe4I");
+        PlacesClient placesClient = Places.createClient(this);
+
+
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setCountries("AU", "NZ");
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("Tag01", "Place: " + place.getName() + ", " + place.getId());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("Tag02", "An error occurred: " + status);
+            }
+        });
+
+        Locale locale = Locale.ENGLISH;
+
+        Address address = new Address(locale);
+        address.setCountryCode("AU");
+        address.setAddressLine(10, "Cosmos st, Glenroy");
+        address.setPostalCode("3046");
+
+        Geocoder coder = new Geocoder(this, locale);
+        String locationName = "10 cosmos st";
+        Geocoder gc = new Geocoder(this);
+        try {
+            List<Address> addressList = gc.getFromLocationName(locationName, 5);
+
+        Address location = addressList.get(0);
+
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        LatLng sydney = new LatLng(latitude , longitude );
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+            CircleOptions circleOptions = new CircleOptions();
+        circleOptions.center(seattle);
+        circleOptions.radius(200);
+        circleOptions.fillColor(Color.GREEN);
+        mMap.addCircle(circleOptions);
+        }catch (Exception e){
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+
+
     }
 
 
@@ -116,7 +183,29 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-        /**
+
+
+
+    // Initialize the AutocompleteSupportFragment.
+
+
+
+
+// Specify the types of place data to return.
+
+
+// Set up a PlaceSelectionListener to handle the response.
+
+
+
+
+
+
+
+
+
+
+    /**
          * Enables the My Location layer if the fine location permission has been granted.
          */
     private void enableMyLocation() {

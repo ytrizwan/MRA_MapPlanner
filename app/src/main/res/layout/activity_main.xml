@@ -7,26 +7,43 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:background="@color/common_google_signin_btn_text_dark_pressed"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        app:titleTextColor="@android:color/white">-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
+
+
+    <fragment android:id="@+id/autocomplete_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:background="@color/common_google_signin_btn_text_dark_pressed"
-        android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white">
-    </androidx.appcompat.widget.Toolbar>
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+        />
+
+
+
+
 
     <fragment
         android:id="@+id/g_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/autocomplete_fragment"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
