@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback{
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     /**
      * Request code for location permission request.
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         mMap = googleMap;
 
 //        //seattle coordinates
-        LatLng seattle = new LatLng(-37.705750,144.937150);
+        LatLng seattle = new LatLng(-37.705750, 144.937150);
 //        mMap.getUiSettings().setZoomControlsEnabled(true);
 //
 //        mMap.setMinZoomPreference(12);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 //        toolbar.setTitleTextColor(Color.BLACK);
 //        setSupportActionBar(toolbar);
 
-        Places.initialize(getApplicationContext(),"AIzaSyA_C4kYNk05hSUukykiHrWpV9rBiLPWe4I");
+        Places.initialize(getApplicationContext(), "AIzaSyA_C4kYNk05hSUukykiHrWpV9rBiLPWe4I");
         PlacesClient placesClient = Places.createClient(this);
 
 
@@ -137,27 +137,28 @@ public class MainActivity extends AppCompatActivity
         address.setPostalCode("3046");
 
         Geocoder coder = new Geocoder(this, locale);
-        String locationName = "10 cosmos st";
+        String locationName = "28B Allwood st, Phillip ACT";
         Geocoder gc = new Geocoder(this);
         try {
             List<Address> addressList = gc.getFromLocationName(locationName, 5);
 
-        Address location = addressList.get(0);
+            Address location = addressList.get(0);
 
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
 
-        LatLng sydney = new LatLng(latitude , longitude );
+            LatLng sydney = new LatLng(latitude, longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Seattle"));
             CircleOptions circleOptions = new CircleOptions();
-        circleOptions.center(seattle);
-        circleOptions.radius(200);
-        circleOptions.fillColor(Color.GREEN);
-        mMap.addCircle(circleOptions);
-        }catch (Exception e){
+            circleOptions.center(sydney);
+            circleOptions.radius(200);
+//            circleOptions.fillColor(Color.GREEN);
+            mMap.addCircle(circleOptions);
+        } catch (Exception e) {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
@@ -184,11 +185,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     // Initialize the AutocompleteSupportFragment.
-
-
 
 
 // Specify the types of place data to return.
@@ -197,17 +194,9 @@ public class MainActivity extends AppCompatActivity
 // Set up a PlaceSelectionListener to handle the response.
 
 
-
-
-
-
-
-
-
-
     /**
-         * Enables the My Location layer if the fine location permission has been granted.
-         */
+     * Enables the My Location layer if the fine location permission has been granted.
+     */
     private void enableMyLocation() {
         // [START maps_check_location_permission]
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -273,47 +262,6 @@ public class MainActivity extends AppCompatActivity
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
