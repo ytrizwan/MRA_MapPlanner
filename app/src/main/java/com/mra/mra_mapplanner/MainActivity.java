@@ -3,6 +3,8 @@ package com.mra.mra_mapplanner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +34,11 @@ import androidx.core.content.ContextCompat;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -40,6 +46,11 @@ public class MainActivity extends AppCompatActivity
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback{
+
+
+    EditText searching_ed;
+
+
 
     /**
      * Request code for location permission request.
@@ -89,9 +100,12 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //00
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+
+        searching_ed = findViewById(R.id.searching_ed);
+
     }
 
 
@@ -187,45 +201,31 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void SearchAddress(View view) {
+        String locationName = searching_ed.getText().toString();
 
 
+//        String locationName = "28B Allwood st, Phillip ACT";
+        Geocoder gc = new Geocoder(this);
+        try {
+            List<Address> addressList = gc.getFromLocationName(locationName, 5);
 
+            Address location = addressList.get(0);
 
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
 
+            LatLng sydney = new LatLng(latitude, longitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Seattle"));
+            CircleOptions circleOptions = new CircleOptions();
+            circleOptions.center(sydney);
+            circleOptions.radius(200);
+//            circleOptions.fillColor(Color.GREEN);
+            mMap.addCircle(circleOptions);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
